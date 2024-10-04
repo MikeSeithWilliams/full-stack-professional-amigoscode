@@ -30,7 +30,21 @@ jobs:
         working-directory: ./backend
 
     steps:
+      - name: Send Slack Message
+        run: >
+          curl -X POST -H 'Content-type: application/json' 
+          --data '
+          {"text":"Deployment started :progress_bar:"}
+          ' 
+          ${{ secrets.SLACK_WEBHOOK_URL }}
       - uses: actions/checkout@v4
+      - name: Send Slack Message
+        run: >
+          curl -X POST -H 'Content-type: application/json' 
+          --data '
+          {"text":":github: https://github.com/MikeSeithWilliams/full-stack-professional-amigoscode/commit/${{ github.sha }}"}
+          ' 
+          ${{ secrets.SLACK_WEBHOOK_URL }}
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -44,6 +58,13 @@ jobs:
       - name: Set build number
         id: build-number
         run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_OUTPUT
+      - name: Send Slack Message
+        run: >
+          curl -X POST -H 'Content-type: application/json' 
+          --data '
+          {"text":":maven: Building with Maven"}
+          ' 
+          ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Build Package Push with Maven
         run: mvn -ntp -B verify -Ddocker.image.tag=${{ steps.build-number.outputs.BUILD_NUMBER }} jib:build
       - name: Update Dockerrun.aws.json api image tag with new build number
@@ -53,6 +74,20 @@ jobs:
           sed -i -E 's_(mikeseith/seith-amigoscode-api:)([^"]*)_\1'${{ steps.build-number.outputs.BUILD_NUMBER }}'_' Dockerrun.aws.json
           echo "Dockerrun.aws.json after updating tag"
           cat Dockerrun.aws.json
+      - name: Slack
+        run: >
+          curl -X POST -H 'Content-type: application/json' 
+          --data '
+          {"text":":docker: Image tag:${{ steps.build-number.outputs.BUILD_NUMBER }} pushed to https://hub.docker.com/repository/docker/mikeseith/seith-amigoscode-api"}
+          ' 
+          ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Send Slack Message
+        run: >
+          curl -X POST -H 'Content-type: application/json' 
+          --data '
+          {"text":":aws: Starting deployment to Elastik Beanstalk"}
+          ' 
+          ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v22
         with:
@@ -64,6 +99,13 @@ jobs:
           version_description: ${{github.SHA}}
           region: ${{ secrets.EB_REGION }}
           deployment_package: backend/Dockerrun.aws.json
+      - name: Send Slack Message
+        run: >
+          curl -X POST -H 'Content-type: application/json' 
+          --data '
+          {"text":":githubloading: Committing to repo https://github.com/MikeSeithWilliams/full-stack-professional-amigoscode"}
+          ' 
+          ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Commit and push Dockerrun.aws.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -73,3 +115,18 @@ jobs:
           git add .
           git commit -m "Update Dockerrun.aws.json docker image with new tag ${{ steps.build-number.outputs.BUILD_NUMBER }}"
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+      - name: Send Slack Message
+        run: >
+          curl -X POST -H 'Content-type: application/json' 
+          --data '
+          {"text":"Deployment and commit completed :github_check_mark: - http://seith-amigoscode-api-env.eba-rzpamfmw.eu-north-1.elasticbeanstalk.com/"}
+          ' 
+          ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Send Slack Message
+        if: always()
+        run: >
+          curl -X POST -H 'Content-type: application/json' 
+          --data '
+          {"text":"Job Status ${{ job.status }}"}
+          ' 
+          ${{ secrets.SLACK_WEBHOOK_URL }}
