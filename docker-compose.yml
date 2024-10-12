@@ -28,7 +28,6 @@ services:
     command:
       - --spring.datasource.url=jdbc:postgresql://db:5432/customer
 
-
 networks:
   db:
     driver: bridge
