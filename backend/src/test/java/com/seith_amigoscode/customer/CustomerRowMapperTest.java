@@ -1,5 +1,6 @@
 package com.seith_amigoscode.customer;
 
+import net.datafaker.idnumbers.PolishIdNumber;
 import org.junit.jupiter.api.Test;
 
 import java.sql.ResultSet;
@@ -20,13 +21,14 @@ class CustomerRowMapperTest {
         when(resultSet.getInt("age")).thenReturn(19);
         when(resultSet.getString("name")).thenReturn("Jamila");
         when(resultSet.getString("email")).thenReturn("Jamila@gmail.com");
+        when(resultSet.getString("gender")).thenReturn("FEMALE");
 
         // When
         Customer actual = customerRowMapper.mapRow(resultSet, 1);
 
         // Then
         Customer expected = new Customer(
-                (long) 1, "Jamila", "Jamila@gmail.com", 19
+                (long) 1, "Jamila", "Jamila@gmail.com", 19, Gender.FEMALE
         );
         assertThat(actual).isEqualTo(expected);
     }

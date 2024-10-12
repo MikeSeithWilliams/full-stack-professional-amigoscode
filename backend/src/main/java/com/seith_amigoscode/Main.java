@@ -3,6 +3,7 @@ package com.seith_amigoscode;
 
 import com.seith_amigoscode.customer.Customer;
 import com.seith_amigoscode.customer.CustomerRepository;
+import com.seith_amigoscode.customer.Gender;
 import net.datafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -32,10 +33,14 @@ public class Main {
             String firstName = faker.name().firstName();
             String lastName = faker.name().lastName();
 
+            int age = random.nextInt(16, 99);
+            Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
+
             Customer customer = new Customer(
                     firstName + " " + lastName,
                     firstName.toLowerCase() + "." + lastName.toLowerCase() + "@example.com",
-                    random.nextInt(16,99)
+                    age,
+                    gender
             );
 
 

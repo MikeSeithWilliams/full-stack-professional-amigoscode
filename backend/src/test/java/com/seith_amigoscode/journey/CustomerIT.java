@@ -3,6 +3,7 @@ package com.seith_amigoscode.journey;
 import com.seith_amigoscode.customer.Customer;
 import com.seith_amigoscode.customer.CustomerRegistrationRequest;
 import com.seith_amigoscode.customer.CustomerUpdateRequest;
+import com.seith_amigoscode.customer.Gender;
 import net.datafaker.Faker;
 import net.datafaker.providers.base.Name;
 import org.junit.jupiter.api.Test;
@@ -40,8 +41,11 @@ public class CustomerIT {
         String email = firstName.toLowerCase() + "." + lastName.toLowerCase() +
                 "-" + UUID.randomUUID() + "@example.com";
         int age = RANDOM.nextInt(1,100);
+
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
+
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                firstName + " " + lastName, email, age
+                firstName + " " + lastName, email, age, gender
         );
         // send a post request
 
@@ -66,7 +70,7 @@ public class CustomerIT {
                 .getResponseBody();
 
         Customer expectedCustomer = new Customer(
-                firstName + " " + lastName, email, age
+                firstName + " " + lastName, email, age, gender
         );
 
         // make sure that customer is present
@@ -102,11 +106,12 @@ public class CustomerIT {
         Name fakerName = faker.name();
         String firstName = fakerName.firstName();
         String lastName = fakerName.lastName();
+        Gender gender = Gender.FEMALE;
         String email = firstName.toLowerCase() + "." + lastName.toLowerCase() +
                 "-" + UUID.randomUUID() + "@example.com";
         int age = RANDOM.nextInt(1,100);
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                firstName + " " + lastName, email, age
+                firstName + " " + lastName, email, age, gender
         );
         // send a post request
 
@@ -164,8 +169,10 @@ public class CustomerIT {
         String email = firstName.toLowerCase() + "." + lastName.toLowerCase() +
                 "-" + UUID.randomUUID() + "@example.com";
         int age = RANDOM.nextInt(1,100);
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
+
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                firstName + " " + lastName, email, age
+                firstName + " " + lastName, email, age, gender
         );
 
         // send a post request
@@ -201,7 +208,7 @@ public class CustomerIT {
 
         String newName = "Ali";
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
-                newName, null, null
+                newName, null, null, null
         );
 
         // update customer
@@ -226,7 +233,7 @@ public class CustomerIT {
                 .getResponseBody();
 
         Customer expectedCustomer = new Customer(
-                id, newName, email, age
+                id, newName, email, age, gender
         );
 
         assertThat(updatedCustomer).isEqualTo(expectedCustomer);
