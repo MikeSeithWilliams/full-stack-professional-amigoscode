@@ -9,14 +9,12 @@ import {
 } from "@chakra-ui/react";
 import UpdateCustomerForm from "./UpdateCustomerForm.jsx";
 
-const AddIcon = () => "+"
 const CloseIcon = () => "x"
 
 const UpdateCustomerDrawer = ({ customerId, initialValues, fetchCustomers }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     return <>
         <Button
-            leftIcon={<AddIcon/>}
             background={"gray.200"}
             color={"black"}
             rounded={"full"}
@@ -26,7 +24,7 @@ const UpdateCustomerDrawer = ({ customerId, initialValues, fetchCustomers }) => 
             }}
             onClick={onOpen}
         >
-            Update customer
+            Update
         </Button>
         <Drawer isOpen={isOpen} onClose={onClose} size={"xl"}>
             <DrawerOverlay />
