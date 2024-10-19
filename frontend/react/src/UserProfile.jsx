@@ -15,7 +15,3 @@ const UserProfile = ({ name, age, gender, imageNumber, ...props }) => {
 }
 
 export default UserProfile
-
-const userProfile = (name, age, gender) => {
-
-}

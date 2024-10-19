@@ -1,8 +1,8 @@
 import {Formik, Form, useField} from 'formik';
 import * as Yup from 'yup';
 import {Alert, AlertIcon, Box, Button, FormLabel, Input, Select, Stack} from "@chakra-ui/react";
-import {saveCustomer} from "../services/client.js";
-import {successNotification, errorNotification} from "../services/notification.js";
+import {updateCustomer} from "../../services/client.js";
+import {successNotification, errorNotification} from "../../services/notification.js";
 
 const MyTextInput = ({label, ...props}) => {
     // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -40,42 +40,33 @@ const MySelect = ({label, ...props}) => {
 };
 
 // And now we can use these
-const CreateCustomerForm = ({ fetchCustomers }) => {
+const CreateCustomerForm = ({ customerId, initialValues, fetchCustomers }) => {
     return (
         <>
             <Formik
-                initialValues={{
-                    name: '',
-                    email: '',
-                    age: 0,
-                    gender: '',
-                }}
+                initialValues={initialValues}
                 validationSchema={Yup.object({
                     name: Yup.string()
-                        .max(15, 'Must be 15 characters or less')
-                        .required('Required'),
+                        .max(15, 'Must be 15 characters or less'),
                     email: Yup.string()
-                        .email('Invalid email address')
-                        .required('Required'),
+                        .email('Invalid email address'),
                     age: Yup.number()
                         .min(16, 'Must be at least 16 years of age')
-                        .max(100, 'Must be less than 100 years of age')
-                        .required(),
+                        .max(100, 'Must be less than 100 years of age'),
                     gender: Yup.string()
                         .oneOf(
                             ['MALE', 'FEMALE'],
                             'Invalid gender'
                         )
-                        .required('Required'),
                 })}
-                onSubmit={(customer, {setSubmitting}) => {
+                onSubmit={(updatedCustomer, {setSubmitting}) => {
                     setSubmitting(true)
-                    saveCustomer(customer)
+                    updateCustomer(customerId, updatedCustomer)
                         .then(res => {
                             console.log(res)
                             successNotification(
-                                "Customer saved",
-                                `${customer.name} was successfully saved`
+                                "Customer updated",
+                                `${updatedCustomer.name} was successfully updated`
                             )
                             fetchCustomers()
                         }).catch(err => {
@@ -89,28 +80,25 @@ const CreateCustomerForm = ({ fetchCustomers }) => {
                     })
                 }}
             >
-                {({isValid, isSubmitting}) => (
+                {({isValid, isSubmitting, dirty}) => (
                     <Form>
                         <Stack spacing={"24px"}>
                             <MyTextInput
                                 label="Name"
                                 name="name"
                                 type="text"
-                                placeholder="Jane"
                             />
 
                             <MyTextInput
                                 label="Email Address"
                                 name="email"
                                 type="email"
-                                placeholder="jane@formik.com"
                             />
 
                             <MyTextInput
                                 label="Age"
                                 name="age"
                                 type="number"
-                                placeholder="20"
                             />
 
                             <MySelect label="Gender" name="gender">
@@ -119,7 +107,7 @@ const CreateCustomerForm = ({ fetchCustomers }) => {
                                 <option value="FEMALE">Female</option>
                             </MySelect>
 
-                            <Button disabled={!isValid || isSubmitting} type="submit">Submit</Button>
+                            <Button disabled={!(isValid && dirty) || isSubmitting} type="submit">Submit</Button>
                         </Stack>
                     </Form>
                 )}

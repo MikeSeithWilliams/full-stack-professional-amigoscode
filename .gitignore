@@ -1,6 +1,7 @@
 **/target/
 **/.idea/
-**/node_modules
+**/node_moduless
+**/.DS_Store
 **/*.iml
 
 # Javascript
