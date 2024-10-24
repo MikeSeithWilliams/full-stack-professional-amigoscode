@@ -40,7 +40,7 @@ jobs:
           chmod +x ../../.ci/build-publish.sh
           USERNAME=seith \
           REPO=seith-amigoscode-react \
-          TAG=${{ steps.build-number.outputs.BUILD_NUMBER }} \ 
+          TAG=${{ steps.build-number.outputs.BUILD_NUMBER }} \
           ../../.ci/build-publish.sh . \
             --build-arg api_base_url=http://seith-amigoscode-api-env.eba-s6khudek.eu-central-1.elasticbeanstalk.com:8080
       - name: Slack
