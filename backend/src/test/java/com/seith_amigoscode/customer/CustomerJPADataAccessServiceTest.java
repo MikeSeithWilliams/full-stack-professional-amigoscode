@@ -53,7 +53,7 @@ class CustomerJPADataAccessServiceTest {
         Customer customer = new Customer(
                 "name",
                 "email@email.com",
-                20,
+                "password", 20,
                 Gender.FEMALE
         );
 
@@ -106,7 +106,7 @@ class CustomerJPADataAccessServiceTest {
         Customer customer = new Customer(
                 "name",
                 "email@email.com",
-                20,
+                "password", 20,
                 Gender.MALE
         );
 
