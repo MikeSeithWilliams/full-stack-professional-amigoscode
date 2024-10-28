@@ -15,7 +15,7 @@
     },
     {
       "name": "seith-amigoscode-api",
-      "image": "mikeseith/seith-amigoscode-api:28.10.2024.19.41.07",
+      "image": "mikeseith/seith-amigoscode-api:28.10.2024.20.03.40",
       "essential": true,
       "memory": 512,
       "portMappings": [
