@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "seith-amigoscode-react",
-      "image": "mikeseith/seith-amigoscode-react:24.10.2024.15.06.59",
+      "image": "mikeseith/seith-amigoscode-react:31.10.2024.21.18.40",
       "essential": true,
       "memory": 256,
       "portMappings": [
