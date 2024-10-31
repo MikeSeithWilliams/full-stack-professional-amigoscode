@@ -3,7 +3,6 @@ package com.seith_amigoscode.security;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -23,7 +22,7 @@ public class CorsConfig {
     private List<String> allowedHeaders;
 
     @Value("#{'${cors.exposed-headers}'.split(',')}")
-    private List<String> exposedHeaders;
+    private List<String> expectedHeaders;
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -31,7 +30,7 @@ public class CorsConfig {
         configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(allowedMethods);
         configuration.setAllowedHeaders(allowedHeaders);
-        configuration.setExposedHeaders(exposedHeaders);
+        configuration.setExposedHeaders(expectedHeaders);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", configuration);
         return source;
