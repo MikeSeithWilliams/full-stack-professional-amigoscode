@@ -32,7 +32,6 @@ import {
     FiChevronDown,
 } from 'react-icons/fi'
 import {useAuth} from "../context/AuthContext.jsx";
-import log from "eslint-plugin-react/lib/util/log.js";
 
 const LinkItems = [
     { name: 'Home', icon: FiHome },
