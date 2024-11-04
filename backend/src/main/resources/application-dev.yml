@@ -18,7 +18,7 @@ management:
 
 spring:
   datasource:
-    url: jdbc:postgresql://awseb-e-namf5ccmev-stack-awsebrdsdatabase-ergb8qa7kwlm.c90koqck84u9.eu-central-1.rds.amazonaws.com:5432/ebdb
+    url: jdbc:postgresql://awseb-e-dfmg2ygpfm-stack-awsebrdsdatabase-vsxajvssryis.c90koqck84u9.eu-central-1.rds.amazonaws.com:5432/customer
     username: seith
     password: password
   jpa:
