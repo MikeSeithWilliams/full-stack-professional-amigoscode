@@ -1,5 +1,4 @@
-'use client'
-
+import React from 'react';
 import {
     IconButton,
     Avatar,
@@ -19,65 +18,61 @@ import {
     MenuDivider,
     MenuItem,
     MenuList,
-    Image
+    Image, Link
 } from '@chakra-ui/react'
 import {
     FiHome,
-    FiTrendingUp,
-    FiCompass,
-    FiStar,
     FiSettings,
     FiMenu,
     FiBell,
     FiChevronDown,
+    FiUsers,
 } from 'react-icons/fi'
 import {useAuth} from "../context/AuthContext.jsx";
 
 const LinkItems = [
-    { name: 'Home', icon: FiHome },
-    { name: 'Trending', icon: FiTrendingUp },
-    { name: 'Explore', icon: FiCompass },
-    { name: 'Favourites', icon: FiStar },
-    { name: 'Settings', icon: FiSettings },
+    { name: 'Home', route: '/dashboard', icon: FiHome },
+    { name: 'Customers', route: '/dashboard/customers', icon: FiUsers },
+    { name: 'Settings', route: '/dashboard', icon: FiSettings },
 ]
 
-const SidebarContent = ({ onClose, ...rest }) => {
+const SidebarContent = ({onClose, ...rest}) => {
     return (
         <Box
             transition="3s ease"
             bg={useColorModeValue('white', 'gray.900')}
             borderRight="1px"
             borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-            w={{ base: 'full', md: 60 }}
+            w={{base: 'full', md: 60}}
             pos="fixed"
             h="full"
             {...rest}>
-            <Flex h="20" flexDirection="column" alignItems="center" mx="8" mb={50} mt={2} justifyContent="space-between">
-                <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" mb={2}>
+            <Flex h="20" flexDirection="column" alignItems="center" mx="8" mb={75} mt={2} justifyContent="space-between">
+                <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" mb={5}>
                     Dashboard
                 </Text>
                 <Image
                     borderRadius='full'
                     boxSize='75px'
-                    src='https://bit.ly/dan-abramov'
-                    alt='Dan Abramov'
+                    src='https://user-images.githubusercontent.com/40702606/210880158-e7d698c2-b19a-4057-b415-09f48a746753.png'
+                    alt='Amigoscode'
                 />
-                <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
+                <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
             </Flex>
             {LinkItems.map((link) => (
-                <NavItem key={link.name} icon={link.icon}>
+                <NavItem key={link.name} route={link.route} icon={link.icon}>
                     {link.name}
                 </NavItem>
             ))}
         </Box>
-    )
-}
+    );
+};
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({icon, route, children, ...rest}) => {
     return (
         <Box
             as="a"
-            href="#"
+            href={route}
             style={{ textDecoration: 'none' }}
             _focus={{ boxShadow: 'none' }}>
             <Flex
@@ -105,7 +100,7 @@ const NavItem = ({ icon, children, ...rest }) => {
                 {children}
             </Flex>
         </Box>
-    )
+    );
 }
 
 const MobileNav = ({ onOpen, ...rest }) => {
@@ -183,12 +178,15 @@ const MobileNav = ({ onOpen, ...rest }) => {
 }
 
 const SidebarWithHeader = ({children}) => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-
+    const {isOpen, onOpen, onClose} = useDisclosure();
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
-            <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
+            <SidebarContent
+                onClose={() => onClose}
+                display={{base: 'none', md: 'block'}}
+            />
             <Drawer
+                autoFocus={false}
                 isOpen={isOpen}
                 placement="left"
                 onClose={onClose}
@@ -196,16 +194,16 @@ const SidebarWithHeader = ({children}) => {
                 onOverlayClick={onClose}
                 size="full">
                 <DrawerContent>
-                    <SidebarContent onClose={onClose} />
+                    <SidebarContent onClose={onClose}/>
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
-            <MobileNav onOpen={onOpen} />
-            <Box ml={{ base: 0, md: 60 }} p="4">
-                { children }
+            <MobileNav onOpen={onOpen}/>
+            <Box ml={{base: 0, md: 60}} p="4">
+                {children}
             </Box>
         </Box>
-    )
+    );
 }
 
 export default SidebarWithHeader
