@@ -1,0 +1,79 @@
+<div>
+  <h2>{{operation === 'update' ? 'Update Customer' : operation === 'create' ? 'New Customer' : 'Register Account'}}</h2>
+  <div class="field">
+    <label for="name">Name</label>
+    <input
+      [(ngModel)]="customer.name"
+      id="name"
+      pInputText
+      placeholder="Jane"
+      type="text"
+      class="w-full"
+    >
+  </div>
+  <div class="field">
+    <label for="email">Email</label>
+    <input
+      [(ngModel)]="customer.email"
+      id="email"
+      pInputText
+      placeholder="Jane@amigoscode.com"
+      type="email"
+      class="w-full"
+    >
+  </div>
+  <div class="field">
+    <label for="age">Age</label>
+    <input
+      [(ngModel)]="customer.age"
+      id="age"
+      pInputText
+      placeholder="34"
+      type="number"
+      class="w-full"
+    >
+  </div>
+  <div class="field" *ngIf="operation === 'create' || operation === 'register'">
+    <label for="password">Password</label>
+    <input
+      [(ngModel)]="customer.password"
+      id="password"
+      pInputText
+      placeholder="password"
+      type="password"
+      class="w-full"
+    >
+  </div>
+  <div class="field">
+    <label for="gender">Gender</label>
+    <select
+      [(ngModel)]="customer.gender"
+      id="gender"
+      class="p-dropdown w-full custom-select"
+    >
+      <option value="MALE">MALE</option>
+      <option value="FEMALE">FEMALE</option>
+    </select>
+  </div>
+  <button
+    [disabled]="!isCustomerValid"
+    (click)="onSubmit()"
+    pButton
+    label="{{operation === 'update' ? 'Update Customer' : operation === 'create' ? 'Create' : 'Create an Account'}}"
+    class="w-full"
+  ></button>
+  <button
+    *ngIf="operation !== 'register'"
+    pButton
+    label="Cancel"
+    class="w-full p-button-outlined p-button-danger mt-2"
+    (click)="onCancel()"
+  ></button>
+  <button
+    *ngIf="operation === 'register'"
+    pButton
+    label="You have an account? Login now."
+    class="w-full p-button-link text-left pl-0"
+    (click)="onLogin()"
+  ></button>
+</div>
