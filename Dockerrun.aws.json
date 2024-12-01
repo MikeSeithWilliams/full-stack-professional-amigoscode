@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "seith-amigoscode-api",
-      "image": "mikeseith/seith-amigoscode-api:04.11.2024.21.49.14",
+      "image": "mikeseith/seith-amigoscode-api:01.12.2024.18.37.40",
       "essential": true,
       "memory": 512,
       "portMappings": [
