@@ -70,7 +70,8 @@ public class CustomerController {
     }
 
     @GetMapping(
-            value = "{customerId}/profile-image"
+            value = "{customerId}/profile-image",
+            produces = MediaType.IMAGE_JPEG_VALUE
     )
     public byte[] getCustomerProfilePicture(@PathVariable("customerId") Long customerId) {
         return customerService.getCustomerProfileImage(customerId);
