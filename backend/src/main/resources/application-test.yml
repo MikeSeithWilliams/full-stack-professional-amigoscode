@@ -1,0 +1,9 @@
+aws:
+  s3:
+    mock: false
+
+spring:
+  datasource:
+    url: jdbc:postgresql://awseb-e-dfmg2ygpfm-stack-awsebrdsdatabase-vsxajvssryis.c90koqck84u9.eu-central-1.rds.amazonaws.com:5432/customer
+    username: seith
+    password: password
