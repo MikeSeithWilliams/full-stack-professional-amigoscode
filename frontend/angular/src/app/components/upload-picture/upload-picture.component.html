@@ -1,0 +1,11 @@
+<div class="card flex justify-content-center">
+  <p-toast />
+  <p-fileUpload
+    name="demo[]"
+    customUpload="true"
+    (uploadHandler)="onUpload($event)"
+    [multiple]="false"
+    accept="image/*"
+    maxFileSize="10000000">
+  </p-fileUpload>
+</div>

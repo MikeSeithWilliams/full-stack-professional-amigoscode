@@ -62,7 +62,6 @@ export class CustomerComponent implements OnInit {
       if (this.operation === 'create') {
         this.customerService.registerCustomer(customer).subscribe({
           next: () => {
-            this.getAllCustomers()
             this.customer = {}
             this.messageService.add({
               severity: 'success',
@@ -74,7 +73,6 @@ export class CustomerComponent implements OnInit {
       } else if (this.operation === 'update') {
         this.customerService.updateCustomer(customer.id, customer).subscribe({
           next: () => {
-            this.getAllCustomers()
             this.customer = {}
             this.messageService.add({
               severity: 'success',
@@ -84,6 +82,7 @@ export class CustomerComponent implements OnInit {
           }
         })
       }
+      this.getAllCustomers()
     }
   }
 

@@ -7,6 +7,7 @@ import {MenuItem, MenuItemCommandEvent} from 'primeng/api';
 import {AuthenticationResponse} from '../../models/authentication-response';
 import {CustomerDTO} from '../../models/customer-dto';
 import {Router} from '@angular/router';
+import {CustomerService} from '../../services/customer/customer.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -24,7 +25,8 @@ import {Router} from '@angular/router';
 export class HeaderBarComponent {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private customerService: CustomerService
   ) {
   }
 
@@ -76,5 +78,10 @@ export class HeaderBarComponent {
     return '--';
   }
 
+  get profilePicture(): string {
+    const user = this.getUser()
+    const customerId = user?.id
+    return this.customerService.getCustomerProfilePicture(customerId)
+  }
 
 }

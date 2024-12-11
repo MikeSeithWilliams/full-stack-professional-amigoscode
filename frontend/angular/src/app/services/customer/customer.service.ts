@@ -31,4 +31,12 @@ export class CustomerService {
   updateCustomer(id: number | undefined, customer: CustomerUpdateRequest): Observable<void> {
     return this.http.put<void>(this.customersUrl + `/${id}`, customer);
   }
+
+  uploadCustomerProfilePicture(id: number | undefined, formData: FormData): Observable<void> {
+    return this.http.post<void>(this.customersUrl + `/${id}/profile-image`, formData);
+  }
+
+  getCustomerProfilePicture(id: number | undefined): string {
+    return `${this.customersUrl}/${id}/profile-image`
+  }
 }

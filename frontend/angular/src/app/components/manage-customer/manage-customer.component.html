@@ -1,5 +1,12 @@
 <div>
   <h2>{{operation === 'update' ? 'Update Customer' : operation === 'create' ? 'New Customer' : 'Register Account'}}</h2>
+  <div>
+    <div>
+      <app-upload-picture
+      [customerId]="customer.id"
+      ></app-upload-picture>
+    </div>
+  </div>
   <div class="field">
     <label for="name">Name</label>
     <input

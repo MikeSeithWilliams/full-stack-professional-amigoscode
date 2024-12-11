@@ -5,6 +5,7 @@ import {ButtonDirective} from 'primeng/button';
 import {CustomerDTO} from '../../models/customer-dto';
 import {ConfirmationService} from 'primeng/api';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {CustomerService} from '../../services/customer/customer.service';
 
 @Component({
   selector: 'app-customer-card',
@@ -22,7 +23,8 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 export class CustomerCardComponent {
 
   constructor(
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private customerService: CustomerService
   ) {
   }
 
@@ -37,9 +39,8 @@ export class CustomerCardComponent {
   @Output()
   update: EventEmitter<CustomerDTO> = new EventEmitter<CustomerDTO>();
 
-  get customerImage(): string {
-    const gender = this.customer.gender === 'MALE' ? 'men' : 'women';
-    return `https://randomuser.me/api/portraits/${gender}/${this.customerIndex}.jpg`
+  get profileImage(): string {
+    return this.customerService.getCustomerProfilePicture(this.customer.id)
   }
 
   onDelete() {

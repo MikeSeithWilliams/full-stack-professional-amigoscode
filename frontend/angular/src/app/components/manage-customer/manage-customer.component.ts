@@ -4,6 +4,7 @@ import {ButtonDirective} from 'primeng/button';
 import {CustomerRegistrationRequest} from '../../models/customer-registration-request';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
+import {UploadPictureComponent} from '../upload-picture/upload-picture.component';
 
 @Component({
   selector: 'app-manage-customer',
@@ -12,7 +13,8 @@ import {NgIf} from '@angular/common';
     InputTextModule,
     ButtonDirective,
     FormsModule,
-    NgIf
+    NgIf,
+    UploadPictureComponent
   ],
   templateUrl: './manage-customer.component.html',
   styleUrl: './manage-customer.component.scss'
